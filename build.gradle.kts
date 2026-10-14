@@ -17,6 +17,9 @@ dependencies {
   }
 }
 
+group = "uk.gov.justice.hmpps.gradle"
+version = "11.0.12"
+
 kotlin {
   jvmToolchain(25)
 }
