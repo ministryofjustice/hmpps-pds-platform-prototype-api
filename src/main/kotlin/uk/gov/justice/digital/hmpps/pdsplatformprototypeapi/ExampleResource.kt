@@ -4,7 +4,7 @@ import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo
 import org.springframework.web.bind.annotation.RestControllerAdvice
-import java.time.LocalDatetime
+import java.time.LocalDateTime
 
 @RestControllerAdvice
 @PreAuthorize("isAuthenticated")
