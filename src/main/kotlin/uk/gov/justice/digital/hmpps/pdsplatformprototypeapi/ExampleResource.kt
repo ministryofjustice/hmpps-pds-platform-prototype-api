@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDateTime
 
-@RestControllerAdvice
+@RestController
 @PreAuthorize("isAuthenticated")
 @RequestMapping("/example", produce = ["application/json])
 class ExampleResource {
