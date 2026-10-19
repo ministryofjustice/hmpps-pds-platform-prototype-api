@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 
 @RestController
 @PreAuthorize("isAuthenticated")
-@RequestMapping("/example", produce = ["application/json])
+@RequestMapping("/example", produces = ["application/json])
 class ExampleResource {
 
     @getMapping("/time")
