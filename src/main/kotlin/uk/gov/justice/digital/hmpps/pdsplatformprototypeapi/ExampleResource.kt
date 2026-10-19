@@ -11,7 +11,7 @@ import java.time.LocalDateTime
 @PreAuthorize("isAuthenticated")
 @RequestMapping("/example", produces = ["application/json"])
 class ExampleResource {
-    
+
   @GetMapping("/time")
   fun getTime(): LocalDateTime = LocalDateTime.now()
 }
