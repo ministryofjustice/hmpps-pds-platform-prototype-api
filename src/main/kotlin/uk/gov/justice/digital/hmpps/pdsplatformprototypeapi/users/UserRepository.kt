@@ -17,7 +17,7 @@ class UserRepository(private val jdbcTemplate: JdbcTemplate) {
     rowMapper,
     username,
     email,
-  )!!
+  )
 
   private val rowMapper = RowMapper { rs, _ ->
     User(

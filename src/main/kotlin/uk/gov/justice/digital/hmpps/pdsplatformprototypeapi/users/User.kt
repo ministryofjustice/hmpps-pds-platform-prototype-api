@@ -20,5 +20,5 @@ data class User(
   val userId: Long,
   val username: String,
   val email: String,
-  val createdAt: OffsetDateTime, 
+  val createdAt: OffsetDateTime,
 )

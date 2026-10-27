@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @PreAuthorize("isAuthenticated")
 @RequestMapping("/users", produces = ["application/json"])
-class UserResource(private val userRepository: UserRepository) {
+class UsersResource(private val userRepository: UserRepository) {
 
   @PostMapping(consumes = ["application/json"])
   @ResponseStatus(HttpStatus.CREATED)
