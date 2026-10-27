@@ -1,9 +1,9 @@
 package uk.gov.justice.digital.hmpps.pdsplatformprototypeapi.users
 
 import jakarta.validation.constraints.Email
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import java.time.OffsetDateTime;
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.Size
+import java.time.OffsetDateTime
 
 data class CreateUserRequest(
   @field:NotBlank(message = "must not be blank")

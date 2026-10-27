@@ -7,7 +7,7 @@ import java.time.OffsetDateTime
 
 @Repository
 class UserRepository(private val jdbcTemplate: JdbcTemplate) {
-  
+
   fun insert(username: String, email: String): User = jdbcTemplate.queryForObject(
     """
     INSERT INTO pds_platform_dev.users (username, email)

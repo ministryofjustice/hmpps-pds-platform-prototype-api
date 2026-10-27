@@ -9,12 +9,12 @@ hmpps-auth:
   url: "http://localhost:8090/auth"
 
 spring:
-  database:
+  datasource:
     url: jdbc:postgresql://localhost:5432/test
     username: test
     password: test
     hikari:
-      initialization-fail-timeout: 1
+      initialization-fail-timeout: -1
 
 management.health.db.enabled: false
 
