@@ -1,19 +1,19 @@
 package uk.gov.justice.digital.hmpps.pdsplatformprototypeapi.integration.users
 
 import org.junit.jupiter.api.Test
-import static org.mockito.ArgumentMatchers.anyString;
+import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mockito.`when`
-import org.springframework.http.MediaType;
+import org.springframework.http.MediaType
 import org.springframework.test.context.bean.override.mockito.MockitoBean
 import uk.gov.justice.digital.hmpps.pdsplatformprototypeapi.integration.IntegrationTestBase
-import uk.gov.justice.digital.hmpps.pdsplatformprototypeapi.integration.users.User
-import uk.gov.justice.digital.hmpps.pdsplatformprototypeapi.integration.users.UserRepository
+import uk.gov.justice.digital.hmpps.pdsplatformprototypeapi.users.User
+import uk.gov.justice.digital.hmpps.pdsplatformprototypeapi.users.UserRepository
 import java.time.OffsetDateTime
 
-class UserResourceTest : IntegrationTestBase() {
+class UsersResourceTest : IntegrationTestBase() {
   
   @MockitoBean
-  private lateinit var userRepository : UserRepository
+  private lateinit var userRepository: UserRepository
   
   @Test
   fun `creates a user and returns 201`() {
@@ -23,14 +23,14 @@ class UserResourceTest : IntegrationTestBase() {
     webTestClient.post()
       .uri("/users")
       .headers(setAuthorisation())
-      .conectType(MediaType.APPLICATION_JSON)
+      .contentType(MediaType.APPLICATION_JSON)
       .bodyValue("""{"username": "alex",  "email": "alex@example.com"}""")
       .exchange()
       .expectStatus().isCreated
       .expectBody()
-      .jsonPath("userID").isEqualto(1)
-      .jsonPath("username").isEqualto("alex")
-      jsonPath("email").isEqualto("alex@example.com")
+      .jsonPath("userId").isEqualTo(1)
+      .jsonPath("username").isEqualTo("alex")
+      .jsonPath("email").isEqualTo("alex@example.com")
   }
 
 

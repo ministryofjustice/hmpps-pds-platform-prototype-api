@@ -8,23 +8,23 @@ import java.time.OffsetDateTime
 @Repository
 class UserRepository(private val jdbcTemplate: JdbcTemplate) {
   
-  fun insert (username: String, email: String): User = jdbcTemplate.queryForObject(
+  fun insert(username: String, email: String): User = jdbcTemplate.queryForObject(
     """
     INSERT INTO pds_platform_dev.users (username, email)
-    VALUES (?,?)
+    VALUES (?, ?)
     RETURNING user_id, username, email, created_at
     """.trimIndent(),
     rowMapper,
     username,
-    email
+    email,
   )!!
 
-  private val rowMapper - RowMapper { rs, _ ->
+  private val rowMapper = RowMapper { rs, _ ->
     User(
-      userID = rs.getLong("user_id"),
+      userId = rs.getLong("user_id"),
       username = rs.getString("username"),
       email = rs.getString("email"),
-      createdAt = rs.getObject("created_at", OffsetDateTime::class.java)
+      createdAt = rs.getObject("created_at", OffsetDateTime::class.java),
     )
   }
 }

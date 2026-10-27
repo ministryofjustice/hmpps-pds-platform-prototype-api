@@ -17,7 +17,7 @@ data class CreateUserRequest(
 )
 
 data class User(
-  val userId: Lond
+  val userId: Long,
   val username: String,
   val email: String,
   val createdAt: OffsetDateTime, 
