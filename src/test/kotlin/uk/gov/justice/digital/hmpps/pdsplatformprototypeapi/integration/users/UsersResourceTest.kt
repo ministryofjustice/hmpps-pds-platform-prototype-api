@@ -11,10 +11,10 @@ import uk.gov.justice.digital.hmpps.pdsplatformprototypeapi.users.UserRepository
 import java.time.OffsetDateTime
 
 class UsersResourceTest : IntegrationTestBase() {
-  
+
   @MockitoBean
   private lateinit var userRepository: UserRepository
-  
+
   @Test
   fun `creates a user and returns 201`() {
     `when`(userRepository.insert(anyString(), anyString()))
@@ -32,6 +32,4 @@ class UsersResourceTest : IntegrationTestBase() {
       .jsonPath("username").isEqualTo("alex")
       .jsonPath("email").isEqualTo("alex@example.com")
   }
-
-
 }
