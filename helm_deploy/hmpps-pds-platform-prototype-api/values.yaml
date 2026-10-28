@@ -35,7 +35,7 @@ generic-service:
   #     [name of environment variable as seen by app]: [key of kubernetes secret to load]
   
   namespace_secrets:
-    hmpps-pds-platform-prototype-api-client-creds:
+    hmpps-pds-platform-prototype-ui-client-creds:
       CLIENT_CREDS_CLIENT_ID: "CLIENT_CREDS_CLIENT_ID"
       CLIENT_CREDS_CLIENT_SECRET: "CLIENT_CREDS_CLIENT_SECRET"
     hmpps-pds-platform-prototype-api-application-insights:
