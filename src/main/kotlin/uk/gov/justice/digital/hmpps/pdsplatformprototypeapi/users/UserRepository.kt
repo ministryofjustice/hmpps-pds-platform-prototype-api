@@ -20,15 +20,11 @@ class UserRepository(private val jdbcTemplate: JdbcTemplate) {
   )
 
   fun findAll(): List<User> = jdbcTemplate.query(
-    """
-    SELECT user_id, username, email, created_at 
-    FROM pds_platform_dev.users 
-    ORDER BY user_id", rowMapper
-    """.trimIndent(),
+    "SELECT user_id, username, email, created_at FROM pds_platform_dev.users ORDER BY user_id",
     rowMapper,
   )
 
-  private val rowMapper = RowMapper { rs, _ ->
+  private val rowMapper: RowMapper<User> = RowMapper { rs, _ ->
     User(
       userId = rs.getLong("user_id"),
       username = rs.getString("username"),
