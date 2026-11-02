@@ -19,6 +19,11 @@ class UserRepository(private val jdbcTemplate: JdbcTemplate) {
     email,
   )
 
+  fun findAll(): List<User> = jdbcTemplate.qeury(
+    "SELECT user_id, email, created_at FROM pds_platform_dev.users ORDER BY user_id",
+    rowMapper,
+  )
+
   private val rowMapper = RowMapper { rs, _ ->
     User(
       userId = rs.getLong("user_id"),
