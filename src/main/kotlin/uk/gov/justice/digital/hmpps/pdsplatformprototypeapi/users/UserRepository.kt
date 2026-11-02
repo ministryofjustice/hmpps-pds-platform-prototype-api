@@ -7,7 +7,7 @@ import java.time.OffsetDateTime
 
 @Repository
 class UserRepository(private val jdbcTemplate: JdbcTemplate) {
-
+  
   fun insert(username: String, email: String): User = jdbcTemplate.queryForObject(
     """
     INSERT INTO pds_platform_dev.users (username, email)
@@ -19,9 +19,13 @@ class UserRepository(private val jdbcTemplate: JdbcTemplate) {
     email,
   )
 
-  fun findAll(): List<User> = jdbcTemplate.qeury(
-    "SELECT user_id, email, created_at FROM pds_platform_dev.users ORDER BY user_id",
-    rowMapper,
+  fun findAll(): List<User> = jdbcTemplate.query(
+    """
+    SELECT user_id, username, email, created_at 
+    FROM pds_platform_dev.users 
+    ORDER BY user_id", rowMapper
+    """.trimIndent(),
+    rowMapper
   )
 
   private val rowMapper = RowMapper { rs, _ ->
