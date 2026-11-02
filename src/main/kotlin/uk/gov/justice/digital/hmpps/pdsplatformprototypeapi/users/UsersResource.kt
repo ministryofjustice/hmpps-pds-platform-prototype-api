@@ -17,7 +17,7 @@ class UsersResource(private val userRepository: UserRepository) {
 
   @GetMapping
   fun getUsers(): List<User> = userRepository.findAll()
-  
+
   @PostMapping(consumes = ["application/json"])
   @ResponseStatus(HttpStatus.CREATED)
   fun createUser(@Valid @RequestBody request: CreateUserRequest): User = userRepository.insert(
