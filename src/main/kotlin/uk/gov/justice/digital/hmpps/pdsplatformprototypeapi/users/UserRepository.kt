@@ -35,11 +35,11 @@ class UserRepository(private val jdbcTemplate: JdbcTemplate) {
     username,
     email,
     userId
-  ).firatOrNull()
+  ).firstOrNull()
 
   fun delete(userId: Long): Boolean = jdbcTemplate.update(
     "DELETE FROM pds_platform_dev.users WHERE user_id = ?".
-    userId.
+    userId,
   ) > 0
 
   private val rowMapper: RowMapper<User> = RowMapper { rs, _ ->
