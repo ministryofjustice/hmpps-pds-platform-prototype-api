@@ -34,7 +34,7 @@ class UserRepository(private val jdbcTemplate: JdbcTemplate) {
     rowMapper,
     username,
     email,
-    userId
+    userId,
   ).firstOrNull()
 
   fun delete(userId: Long): Boolean = jdbcTemplate.update(
