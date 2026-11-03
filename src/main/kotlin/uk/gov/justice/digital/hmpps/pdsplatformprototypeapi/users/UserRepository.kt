@@ -38,7 +38,7 @@ class UserRepository(private val jdbcTemplate: JdbcTemplate) {
   ).firstOrNull()
 
   fun delete(userId: Long): Boolean = jdbcTemplate.update(
-    "DELETE FROM pds_platform_dev.users WHERE user_id = ?".
+    "DELETE FROM pds_platform_dev.users WHERE user_id = ?",
     userId,
   ) > 0
 
