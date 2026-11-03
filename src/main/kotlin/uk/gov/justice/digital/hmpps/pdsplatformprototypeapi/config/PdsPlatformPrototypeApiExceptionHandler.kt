@@ -2,17 +2,22 @@ package uk.gov.justice.digital.hmpps.pdsplatformprototypeapi.config
 
 import jakarta.validation.ValidationException
 import org.slf4j.LoggerFactory
+import org.springframework.dao.DuplicateKeyException
 import org.springframework.http.HttpStatus.BAD_REQUEST
+import org.springframework.http.HttpStatus.CONFLICT
 import org.springframework.http.HttpStatus.FORBIDDEN
 import org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR
 import org.springframework.http.HttpStatus.METHOD_NOT_ALLOWED
 import org.springframework.http.HttpStatus.NOT_FOUND
 import org.springframework.http.ResponseEntity
+import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.security.access.AccessDeniedException
 import org.springframework.web.HttpRequestMethodNotSupportedException
+import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.servlet.resource.NoResourceFoundException
+import uk.gov.justice.digital.hmpps.pdsplatformprototypeapi.users.UserNotFoundException
 import uk.gov.justice.hmpps.kotlin.common.ErrorResponse
 
 @RestControllerAdvice
@@ -27,6 +32,53 @@ class PdsPlatformPrototypeApiExceptionHandler {
         developerMessage = e.message,
       ),
     ).also { log.info("Validation exception: {}", e.message) }
+
+  @ExceptionHandler(MethodArgumentNotValidException::class)
+  fun handleMethodArgumentNotValidException(e: MethodArgumentNotValidException): ResponseEntity<ErrorResponse> {
+    val message = e.bindingResult.fieldErrors.joinToString("; ") { "${it.field}: ${it.defaultMessage}" }
+    return ResponseEntity
+      .status(BAD_REQUEST)
+      .body(
+        ErrorResponse(
+          status = BAD_REQUEST,
+          userMessage = "Validation failure: $message",
+          developerMessage = message,
+        ),
+      ).also { log.info("Request validation failed: {}", message) }
+  }
+
+  @ExceptionHandler(HttpMessageNotReadableException::class)
+  fun handleHttpMessageNotReadableException(e: HttpMessageNotReadableException): ResponseEntity<ErrorResponse> = ResponseEntity
+    .status(BAD_REQUEST)
+    .body(
+      ErrorResponse(
+        status = BAD_REQUEST,
+        userMessage = "Validation failure: request body is missing or malformed",
+        developerMessage = e.message,
+      ),
+    ).also { log.info("Unreadable request body: {}", e.message) }
+
+  @ExceptionHandler(DuplicateKeyException::class)
+  fun handleDuplicateKeyException(e: DuplicateKeyException): ResponseEntity<ErrorResponse> = ResponseEntity
+    .status(CONFLICT)
+    .body(
+      ErrorResponse(
+        status = CONFLICT,
+        userMessage = "A user with these details already exists",
+        developerMessage = e.message,
+      ),
+    ).also { log.info("Duplicate key: {}", e.message) }
+
+  @ExceptionHandler(UserNotFoundException::class)
+  fun handleUserNotFoundException(e: UserNotFoundException): ResponseEntity<ErrorResponse> = ResponseEntity
+    .status(NOT_FOUND)
+    .body(
+      ErrorResponse(
+        status = NOT_FOUND,
+        userMessage = e.message,
+        developerMessage = e.message,
+      ),
+    ).also { log.info("User not found: {}", e.message) }
 
   @ExceptionHandler(NoResourceFoundException::class)
   fun handleNoResourceFoundException(e: NoResourceFoundException): ResponseEntity<ErrorResponse> = ResponseEntity

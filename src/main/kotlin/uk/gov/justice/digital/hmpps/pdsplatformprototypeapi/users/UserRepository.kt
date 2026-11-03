@@ -24,6 +24,24 @@ class UserRepository(private val jdbcTemplate: JdbcTemplate) {
     rowMapper,
   )
 
+  fun update(userId: Long, username: String, email: String): User? = jdbcTemplate.query(
+    """
+    UPDATE pds_platform_dev.users
+    SET username = ?, email = ?
+    WHERE user_id = ?
+    RETURNING user_id, username, email, created_at
+    """.trimIndent(),
+    rowMapper,
+    username,
+    email,
+    userId
+  ).firatOrNull()
+
+  fun delete(userId: Long): Boolean = jdbcTemplate.update(
+    "DELETE FROM pds_platform_dev.users WHERE user_id = ?".
+    userId.
+  ) > 0
+
   private val rowMapper: RowMapper<User> = RowMapper { rs, _ ->
     User(
       userId = rs.getLong("user_id"),
